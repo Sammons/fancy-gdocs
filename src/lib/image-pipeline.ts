@@ -7,7 +7,7 @@ import { execFileSync } from "node:child_process";
 import { randomUUID } from "node:crypto";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { fail, zapier } from "./api-client.ts";
+import { fail, createAuthClient } from "./api-client.ts";
 
 const DRIVE_UPLOAD_API = "https://www.googleapis.com/upload/drive/v3/files";
 const DRIVE_API = "https://www.googleapis.com/drive/v3/files";
@@ -98,20 +98,20 @@ export async function uploadToDrive(
     `--${boundary}--`,
   ].join("\r\n");
 
-  const res = await zapier.fetch(`${DRIVE_UPLOAD_API}?uploadType=multipart`, {
+  const { client } = await createAuthClient();
+  const res = await client.fetch(`${DRIVE_UPLOAD_API}?uploadType=multipart`, {
     method: "POST",
-    connection,
     body,
     headers: { "Content-Type": `multipart/related; boundary=${boundary}` },
   });
-  const result = await res.json();
+  const result = await res.json() as { id?: string; error?: { message: string } };
   if (result.error) fail(`Drive upload failed: ${result.error.message}`);
   const fileId = result.id;
+  if (!fileId) fail("Drive upload returned no file ID");
 
   // Share publicly so Google Docs can fetch it
-  await zapier.fetch(`${DRIVE_API}/${fileId}/permissions`, {
+  await client.fetch(`${DRIVE_API}/${fileId}/permissions`, {
     method: "POST",
-    connection,
     body: JSON.stringify({ role: "reader", type: "anyone" }),
     headers: { "Content-Type": "application/json" },
   });
@@ -161,10 +161,11 @@ export async function resolveSvgImages(
 }
 
 /** Delete temporary Drive files after doc creation. */
-export async function cleanupDriveFiles(fileIds: string[], connection: string): Promise<void> {
+export async function cleanupDriveFiles(fileIds: string[], _connection?: string): Promise<void> {
+  const { client } = await createAuthClient();
   for (const id of fileIds) {
     try {
-      await zapier.fetch(`${DRIVE_API}/${id}`, { method: "DELETE", connection });
+      await client.fetch(`${DRIVE_API}/${id}`, { method: "DELETE" });
     } catch { /* Drive cleanup, ok to fail */ }
   }
   if (fileIds.length > 0) console.error(`Cleaned up ${fileIds.length} temporary Drive file(s).`);

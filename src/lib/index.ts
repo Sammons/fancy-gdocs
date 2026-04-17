@@ -7,7 +7,9 @@ export {
   batchUpdate,
   getDoc,
   createFetchClient,
-  zapier,
+  createAuthClient,
+  printAuthDiagnostics,
+  type AuthProvider,
 } from "./api-client.ts";
 
 export {

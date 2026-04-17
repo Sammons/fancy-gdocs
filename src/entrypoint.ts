@@ -32,6 +32,8 @@ import {
   batchUpdate,
   getDoc,
   createFetchClient,
+  createAuthClient,
+  printAuthDiagnostics,
 } from "./lib/api-client.ts";
 import type { BatchUpdateResponse, BatchUpdateReply, GoogleDocsInlineObject, GoogleDocsTab } from "./lib/google-docs-types.ts";
 import {
@@ -300,7 +302,7 @@ async function createDocFromSpec(
     driveFileIds.push(...await resolveSvgImages(requests, connection));
 
     // Execute the IR via DAG pipeline
-    const client = createFetchClient(connection);
+    const client = await createFetchClient(connection);
     console.error(`Executing IR with ${filteredIR.segments.length} segment(s) ...`);
     await executeIR(filteredIR, client, undefined, connection, documentId); // theme already applied in compileDoc
 
@@ -672,6 +674,25 @@ async function handleRead(args: string[]): Promise<void> {
   }
 }
 
+async function handleAuth(): Promise<void> {
+  printAuthDiagnostics();
+
+  // Try to get the active auth client
+  try {
+    const { provider } = await createAuthClient();
+    console.log(`\nActive provider: ${provider}`);
+    console.log("✓ Authentication is working.");
+  } catch (err: any) {
+    console.error(`\n✗ No valid authentication found: ${err?.message ?? err}`);
+    console.error("\nTo authenticate, use one of:");
+    console.error("  1. Set GOOGLE_ACCESS_TOKEN (short-lived, for CI/scripts)");
+    console.error("  2. Set GOOGLE_SERVICE_ACCOUNT_KEY=/path/to/key.json");
+    console.error("  3. Run: gcloud auth application-default login");
+    console.error("  4. Install Zapier SDK: npx zapier-sdk connect google_docs");
+    process.exit(1);
+  }
+}
+
 function printHelp(): void {
   console.log(`gdocs — Create and read richly formatted Google Docs.
 
@@ -703,6 +724,9 @@ Commands:
              Types: pie, bar, scatter, sankey
              Run "pnpm gdocs chart help" for full options.
 
+  auth       Check which authentication method will be used.
+             Priority: GOOGLE_ACCESS_TOKEN → Service Account → gcloud ADC → Zapier SDK
+
   help       Show this help message.
 
 DSL block types: title, subtitle, heading, paragraph, table, image, list, pageBreak, hr
@@ -728,6 +752,9 @@ try {
       break;
     case "chart":
       handleChart(rest);
+      break;
+    case "auth":
+      await handleAuth();
       break;
     case "help":
     case "--help":
