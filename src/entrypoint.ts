@@ -97,14 +97,15 @@ async function handleCreate(args: string[]): Promise<void> {
 
   const spec = readSpec(path.resolve(filePath));
 
-  // Apply theme preset if specified
-  if (themeName) {
-    if (!isThemeName(themeName)) {
-      fail(`Unknown theme: "${themeName}". Available themes: ${THEME_NAMES.join(", ")}`);
+  // Resolve theme: CLI flag takes precedence, then spec.theme string, then spec.theme object
+  const resolvedThemeName = themeName ?? (typeof spec.theme === "string" ? spec.theme : undefined);
+  if (resolvedThemeName) {
+    if (!isThemeName(resolvedThemeName)) {
+      fail(`Unknown theme: "${resolvedThemeName}". Available themes: ${THEME_NAMES.join(", ")}`);
     }
-    const preset = loadTheme(themeName);
+    const preset = loadTheme(resolvedThemeName);
     applyThemePreset(spec, preset);
-    console.error(`Applied theme: ${themeName}`);
+    console.error(`Applied theme: ${resolvedThemeName}`);
   }
   if (!spec.title) fail("Error: DSL file must have a 'title' field.");
   if (!spec.blocks && !spec.tabs) fail("Error: DSL file must have 'blocks' or 'tabs'.");

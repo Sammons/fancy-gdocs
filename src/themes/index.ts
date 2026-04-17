@@ -58,8 +58,8 @@ export function applyThemePreset(
   spec: { theme?: unknown; docStyle?: unknown },
   preset: ThemePreset,
 ): void {
-  // Merge theme (spec takes precedence)
-  const existingTheme = (spec.theme ?? {}) as Record<string, unknown>;
+  // Merge theme (spec takes precedence). If spec.theme is a string (theme name), treat as empty.
+  const existingTheme = (typeof spec.theme === "object" && spec.theme !== null ? spec.theme : {}) as Record<string, unknown>;
   spec.theme = { ...preset.theme, ...existingTheme };
 
   // Merge documentStyle (spec takes precedence)

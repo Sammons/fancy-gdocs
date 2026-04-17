@@ -8,7 +8,7 @@
     "fancy-gdocs": "./dist/gdocs.js"
   },
   "scripts": {
-    "build": "esbuild src/entrypoint.ts --bundle --platform=node --format=esm --outfile=dist/gdocs.js --external:typescript --external:@zapier/zapier-sdk --external:@zapier/zapier-sdk-cli-login",
+    "build": "esbuild src/entrypoint.ts --bundle --platform=node --format=esm --outfile=dist/gdocs.js --external:typescript --external:@zapier/zapier-sdk --external:@zapier/zapier-sdk-cli-login && cp src/themes/*.json dist/",
     "test": "node --test src/**/*.test.ts",
     "e2e": "node src/e2e/round-trip.e2e.ts",
     "typecheck": "tsc --noEmit",
