@@ -1,0 +1,44 @@
+{
+  "name": "dark-mode",
+  "description": "Dark background with light text for digital viewing",
+  "theme": {
+    "fontFamily": "Inter",
+    "fontSize": 11,
+    "textColor": "#E0E0E0",
+    "headingColor": "#A8C7FA",
+    "TITLE": { "fontFamily": "Inter", "fontSize": 26, "color": "#A8C7FA", "bold": true },
+    "SUBTITLE": { "fontFamily": "Inter", "fontSize": 14, "color": "#81C995", "italic": true },
+    "HEADING_1": { "fontFamily": "Inter", "fontSize": 18, "color": "#81C995", "bold": true },
+    "HEADING_2": { "fontFamily": "Inter", "fontSize": 14, "color": "#A8C7FA", "bold": true },
+    "HEADING_3": { "fontFamily": "Inter", "fontSize": 12, "color": "#CE93D8", "bold": true },
+    "NORMAL_TEXT": { "fontFamily": "Inter", "fontSize": 11, "color": "#E0E0E0" }
+  },
+  "documentStyle": {
+    "background": "#1A1A2E",
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "calloutPresets": {
+    "note": { "fill": "#0D1B2A", "borderColor": "#A8C7FA" },
+    "warning": { "fill": "#2D1F00", "borderColor": "#FDD663" },
+    "success": { "fill": "#0D2818", "borderColor": "#81C995" }
+  },
+  "tableHeaderStyle": {
+    "fill": "#0D2137",
+    "textColor": "#A8C7FA",
+    "bold": true
+  },
+  "codeBlockStyle": {
+    "fontFamily": "Roboto Mono",
+    "fontSize": 10,
+    "colors": {
+      "keyword": "#FF7B72",
+      "function": "#D2A8FF",
+      "string": "#A5D6A7",
+      "type": "#79C0FF",
+      "default": "#E0E0E0"
+    }
+  }
+}

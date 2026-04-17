@@ -1,0 +1,11 @@
+{
+  "name": "fancy-gdocs",
+  "version": "0.1.0",
+  "description": "Google Docs DSL compiler — write docs in JSON, get formatted documents",
+  "skills": [
+    {
+      "name": "gdocs",
+      "path": "../SKILL.md"
+    }
+  ]
+}
