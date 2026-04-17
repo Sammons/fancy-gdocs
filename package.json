@@ -8,23 +8,18 @@
     "fancy-gdocs": "./dist/gdocs.js"
   },
   "scripts": {
-    "build": "esbuild src/entrypoint.ts --bundle --platform=node --format=esm --outfile=dist/gdocs.js --external:typescript --external:@zapier/zapier-sdk",
+    "build": "esbuild src/entrypoint.ts --bundle --platform=node --format=esm --outfile=dist/gdocs.js --external:typescript",
     "test": "node --test src/**/*.test.ts",
     "e2e": "node src/e2e/round-trip.e2e.ts",
     "typecheck": "tsc --noEmit",
     "audit": "npm audit --audit-level=moderate"
   },
   "dependencies": {
+    "@zapier/zapier-sdk": "^0.40.3",
     "zod": "^3.23.0"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0",
-    "@zapier/zapier-sdk": "^0.40.3"
-  },
-  "peerDependenciesMeta": {
-    "@zapier/zapier-sdk": {
-      "optional": true
-    }
+    "typescript": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",
