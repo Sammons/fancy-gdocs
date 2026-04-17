@@ -220,8 +220,17 @@ function normalizeRuns(block: { text?: string; runs?: TypedRun[]; bold?: boolean
 
 /**
  * Normalize a table cell to CellNode format.
+ * Accepts either a plain string or a TypedCell object.
  */
-function normalizeCell(cell: TypedCell): CellNode {
+function normalizeCell(cell: TypedCell | string): CellNode {
+  // Handle plain string cells
+  if (typeof cell === "string") {
+    return {
+      kind: "cell",
+      children: [{ kind: "paragraph", runs: [{ text: cell }] }],
+    };
+  }
+
   const children: Block[] = [];
 
   // Create a paragraph block from the cell content
