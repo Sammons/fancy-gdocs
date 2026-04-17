@@ -63,6 +63,26 @@ fancy-gdocs chart pie '{"data": [{"label": "Yes", "value": 73}, {"label": "No", 
 | `hr` | Horizontal rule |
 | `pageBreak` | Start a new page |
 
+## Authentication
+
+fancy-gdocs supports multiple auth backends. It checks in this order:
+
+| Method | How to configure |
+|--------|------------------|
+| **Access Token** | `GOOGLE_ACCESS_TOKEN=ya29.xxx` (short-lived, for CI) |
+| **Service Account** | `GOOGLE_SERVICE_ACCOUNT_KEY=/path/to/key.json` |
+| **gcloud ADC** | `gcloud auth application-default login` |
+| **Zapier SDK** | `npx zapier-sdk connect google_docs` (easiest) |
+
+Check your auth status:
+```bash
+fancy-gdocs auth
+```
+
+**Service Account setup**: Create a service account in GCP Console, enable the Docs API and Drive API, download the JSON key, and set `GOOGLE_SERVICE_ACCOUNT_KEY=/path/to/key.json`.
+
+**Zapier SDK** is the easiest option for personal use — it handles OAuth for you with zero configuration.
+
 ## Development
 
 ```bash
