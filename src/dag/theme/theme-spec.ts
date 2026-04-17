@@ -10,6 +10,24 @@ export interface NamedStyleOverride {
   // spacing is handled at paragraph level, not text style
 }
 
+export interface TableTheme {
+  // Header row styling
+  headerBackground?: string;    // background color for header row
+  headerColor?: string;         // text color for header row
+  headerBold?: boolean;         // bold text in header row (default: true)
+
+  // Cell styling
+  cellPadding?: number;         // padding in pt (all sides)
+  cellVerticalAlign?: "TOP" | "MIDDLE" | "BOTTOM";
+
+  // Border styling
+  borderColor?: string;         // border color
+  borderWidth?: number;         // border width in pt
+
+  // Alternating row colors
+  alternateRowBackground?: string;  // background for odd rows (even rows = white)
+}
+
 export interface ThemeSpec {
   // Global defaults — applied to all text where not already set
   fontFamily?: string;
@@ -17,6 +35,9 @@ export interface ThemeSpec {
   textColor?: string;
   headingColor?: string;  // fallback for HEADING_* if no per-style override
   linkColor?: string;
+
+  // Table styling defaults
+  table?: TableTheme;
 
   // Per-named-style overrides — keyed by namedStyleType
   // These take precedence over global defaults for matching paragraphs

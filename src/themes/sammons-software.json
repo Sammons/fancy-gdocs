@@ -1,0 +1,41 @@
+{
+  "name": "sammons-software",
+  "description": "Sammons Software LLC professional branding - clean, modern, technical",
+  "theme": {
+    "fontFamily": "Lato",
+    "fontSize": 11,
+    "textColor": "#2D3748",
+    "linkColor": "#4299E1",
+    "TITLE": { "fontFamily": "Montserrat", "fontSize": 28, "color": "#2D3748", "bold": true },
+    "SUBTITLE": { "fontFamily": "Montserrat", "fontSize": 14, "color": "#4A5568", "italic": true },
+    "HEADING_1": { "fontFamily": "Montserrat", "fontSize": 20, "color": "#2D3748", "bold": true },
+    "HEADING_2": { "fontFamily": "Montserrat", "fontSize": 16, "color": "#2D3748", "bold": true },
+    "HEADING_3": { "fontFamily": "Montserrat", "fontSize": 13, "color": "#4A5568", "bold": true },
+    "NORMAL_TEXT": { "fontFamily": "Lato", "fontSize": 11, "color": "#2D3748" },
+    "table": {
+      "headerBackground": "#2D3748",
+      "headerColor": "#FFFFFF",
+      "headerBold": true,
+      "cellPadding": 6,
+      "borderColor": "#E2E8F0",
+      "borderWidth": 1,
+      "alternateRowBackground": "#F7FAFC"
+    }
+  },
+  "documentStyle": {
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "calloutPresets": {
+    "info": { "fill": "#EBF8FF", "borderColor": "#4299E1" },
+    "warning": { "fill": "#FFFAF0", "borderColor": "#ED8936" },
+    "tip": { "fill": "#F0FFF4", "borderColor": "#48BB78" }
+  },
+  "tableHeaderStyle": {
+    "fill": "#2D3748",
+    "textColor": "#FFFFFF",
+    "bold": true
+  }
+}
