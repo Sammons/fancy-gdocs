@@ -1,0 +1,229 @@
+{
+  "title": "DAG E2E Test Document",
+  "account": "ben",
+  "docStyle": {
+    "size": "LETTER",
+    "orientation": "PORTRAIT",
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "header": {
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "runs": [
+          { "text": "DAG E2E Test Document", "italic": true, "color": "#666666", "fontSize": 10 }
+        ],
+        "alignment": "CENTER"
+      }
+    ]
+  },
+  "footer": {
+    "blocks": [
+      {
+        "kind": "paragraph",
+        "runs": [
+          { "text": "Page ", "fontSize": 9, "color": "#888888" },
+          { "text": "{{page}}", "fontSize": 9, "color": "#888888" }
+        ],
+        "alignment": "CENTER"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "kind": "paragraph",
+      "style": "TITLE",
+      "anchorId": "top",
+      "runs": [
+        { "text": "DAG E2E Test Document" }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [
+        { "text": "This paragraph demonstrates ", "fontSize": 12 },
+        { "text": "bold", "bold": true },
+        { "text": ", " },
+        { "text": "italic", "italic": true },
+        { "text": ", and " },
+        { "text": "linked text", "link": "https://sammons.io", "color": "#1a73e8", "underline": true },
+        { "text": ". It also includes " },
+        { "text": "strikethrough", "strikethrough": true },
+        { "text": " and " },
+        { "text": "highlighted", "backgroundColor": "#ffff00" },
+        { "text": " text." }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "style": "HEADING_1",
+      "anchorId": "section1",
+      "runs": [
+        { "text": "Section 1: Tables and Lists" }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [
+        { "text": "This paragraph includes a footnote reference" },
+        { "text": "", "footnote": { "runs": [{ "text": "This is the footnote content explaining additional details." }] } },
+        { "text": " which appears at the bottom of the page." }
+      ]
+    },
+    {
+      "kind": "table",
+      "columnWidths": [200, 200],
+      "rows": [
+        [
+          {
+            "kind": "cell",
+            "backgroundColor": "#f3f3f3",
+            "children": [
+              { "kind": "paragraph", "runs": [{ "text": "Header 1", "bold": true }], "alignment": "CENTER" }
+            ]
+          },
+          {
+            "kind": "cell",
+            "backgroundColor": "#f3f3f3",
+            "children": [
+              { "kind": "paragraph", "runs": [{ "text": "Header 2", "bold": true }], "alignment": "CENTER" }
+            ]
+          }
+        ],
+        [
+          {
+            "kind": "cell",
+            "children": [
+              { "kind": "paragraph", "runs": [{ "text": "Cell A1" }] }
+            ]
+          },
+          {
+            "kind": "cell",
+            "children": [
+              { "kind": "paragraph", "runs": [{ "text": "Cell B1", "italic": true }] }
+            ]
+          }
+        ]
+      ],
+      "pinnedHeaderRows": 1
+    },
+    {
+      "kind": "paragraph",
+      "runs": [{ "text": "" }]
+    },
+    {
+      "kind": "list",
+      "style": "BULLET",
+      "items": [
+        [{ "kind": "paragraph", "runs": [{ "text": "First bullet item" }] }],
+        [{ "kind": "paragraph", "runs": [{ "text": "Second bullet item with ", "fontSize": 12 }, { "text": "bold text", "bold": true }] }],
+        [{ "kind": "paragraph", "runs": [{ "text": "Third bullet item" }] }]
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [{ "text": "" }]
+    },
+    {
+      "kind": "image",
+      "uri": "https://picsum.photos/400/200",
+      "width": 400,
+      "height": 200
+    },
+    {
+      "kind": "hr"
+    },
+    {
+      "kind": "paragraph",
+      "style": "HEADING_2",
+      "anchorId": "section2",
+      "runs": [
+        { "text": "Section 2: Cross-References and Callouts" }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [
+        { "text": "Click here to jump back to " },
+        { "text": "Section 1", "link": { "anchorId": "section1" }, "color": "#1a73e8", "underline": true },
+        { "text": " or return to the " },
+        { "text": "top", "link": { "anchorId": "top" }, "color": "#1a73e8", "underline": true },
+        { "text": " of the document." }
+      ]
+    },
+    {
+      "kind": "callout",
+      "preset": "INFO",
+      "children": [
+        {
+          "kind": "paragraph",
+          "runs": [
+            { "text": "Info Callout: ", "bold": true },
+            { "text": "This is an informational callout block. It supports nested content and multiple paragraphs." }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "blockquote",
+      "children": [
+        {
+          "kind": "paragraph",
+          "runs": [
+            { "text": "This is a blockquote. It can contain styled text like " },
+            { "text": "emphasis", "italic": true },
+            { "text": " and represents quoted content." }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "style": "HEADING_3",
+      "runs": [
+        { "text": "Additional Features" }
+      ]
+    },
+    {
+      "kind": "list",
+      "style": "NUMBERED",
+      "items": [
+        [{ "kind": "paragraph", "runs": [{ "text": "Numbered list item one" }] }],
+        [{ "kind": "paragraph", "runs": [{ "text": "Numbered list item two" }] }],
+        [{ "kind": "paragraph", "runs": [{ "text": "Numbered list item three" }] }]
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [{ "text": "" }]
+    },
+    {
+      "kind": "callout",
+      "preset": "WARNING",
+      "children": [
+        {
+          "kind": "paragraph",
+          "runs": [
+            { "text": "Warning: ", "bold": true, "color": "#c53929" },
+            { "text": "This demonstrates the WARNING callout preset." }
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [
+        { "text": "Final paragraph with " },
+        { "text": "superscript", "superscript": true },
+        { "text": " and " },
+        { "text": "subscript", "subscript": true },
+        { "text": " text, plus a date: " },
+        { "text": "", "date": { "isoDate": "2026-04-12" } },
+        { "text": "." }
+      ]
+    }
+  ]
+}

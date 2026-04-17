@@ -1,0 +1,38 @@
+{
+  "name": "@sammons/fancy-gdocs",
+  "version": "0.1.0",
+  "description": "Google Docs DSL compiler and runtime for programmatic document generation",
+  "type": "module",
+  "main": "dist/gdocs.js",
+  "bin": {
+    "fancy-gdocs": "./dist/gdocs.js"
+  },
+  "scripts": {
+    "build": "esbuild src/entrypoint.ts --bundle --platform=node --format=esm --outfile=dist/gdocs.js --external:typescript",
+    "test": "node --test src/**/*.test.ts",
+    "e2e": "node src/e2e/round-trip.e2e.ts",
+    "typecheck": "tsc --noEmit",
+    "audit": "npm audit --audit-level=moderate"
+  },
+  "dependencies": {
+    "@zapier/zapier-sdk": "^0.40.3",
+    "zod": "^3.23.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "esbuild": "^0.20.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Sammons/fancy-gdocs.git"
+  },
+  "author": "Ben Sammons <ben@sammons.io>",
+  "license": "MIT",
+  "private": true
+}

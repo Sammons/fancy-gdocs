@@ -1,0 +1,29 @@
+{
+  "name": "academic",
+  "description": "Academic paper formatting with Times New Roman and double spacing",
+  "theme": {
+    "fontFamily": "Times New Roman",
+    "fontSize": 12,
+    "textColor": "#000000",
+    "TITLE": { "fontFamily": "Times New Roman", "fontSize": 14, "bold": true },
+    "SUBTITLE": { "fontFamily": "Times New Roman", "fontSize": 12, "italic": true },
+    "HEADING_1": { "fontFamily": "Times New Roman", "fontSize": 12, "bold": true },
+    "HEADING_2": { "fontFamily": "Times New Roman", "fontSize": 12, "bold": true, "italic": true },
+    "HEADING_3": { "fontFamily": "Times New Roman", "fontSize": 12, "italic": true },
+    "NORMAL_TEXT": { "fontFamily": "Times New Roman", "fontSize": 12 }
+  },
+  "documentStyle": {
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "paragraphDefaults": {
+    "lineSpacing": 2.0,
+    "firstLineIndent": 36
+  },
+  "bibliographyStyle": {
+    "lineSpacing": 1.0,
+    "hangingIndent": 36
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "title": "Simple Test Document",
+  "account": "ben",
+  "blocks": [
+    {
+      "kind": "paragraph",
+      "style": "TITLE",
+      "runs": [
+        { "text": "Simple Test Document" }
+      ]
+    },
+    {
+      "kind": "paragraph",
+      "runs": [
+        { "text": "This is a simple test paragraph for quick sanity checks." }
+      ]
+    }
+  ]
+}

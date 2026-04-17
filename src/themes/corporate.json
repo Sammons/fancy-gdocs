@@ -1,0 +1,29 @@
+{
+  "name": "corporate",
+  "description": "Professional corporate branding with Montserrat headings and Lato body",
+  "theme": {
+    "fontFamily": "Lato",
+    "fontSize": 11,
+    "textColor": "#2D2D2D",
+    "TITLE": { "fontFamily": "Montserrat", "fontSize": 28, "color": "#003087", "bold": true },
+    "SUBTITLE": { "fontFamily": "Montserrat", "fontSize": 14, "color": "#0057B8", "italic": true },
+    "HEADING_1": { "fontFamily": "Montserrat", "fontSize": 18, "color": "#003087", "bold": true },
+    "HEADING_2": { "fontFamily": "Montserrat", "fontSize": 14, "color": "#0057B8", "bold": true },
+    "HEADING_3": { "fontFamily": "Montserrat", "fontSize": 12, "color": "#003087", "bold": true },
+    "NORMAL_TEXT": { "fontFamily": "Lato", "fontSize": 11, "color": "#2D2D2D" }
+  },
+  "documentStyle": {
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "calloutPresets": {
+    "brand": { "fill": "#E8F0FE", "borderColor": "#003087" }
+  },
+  "tableHeaderStyle": {
+    "fill": "#003087",
+    "textColor": "#FFFFFF",
+    "bold": true
+  }
+}
