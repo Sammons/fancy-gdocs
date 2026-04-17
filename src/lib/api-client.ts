@@ -199,10 +199,67 @@ export async function resolveConnectionId(account: string): Promise<string> {
   );
 }
 
-/** Create Zapier SDK client (lazy import to allow tree-shaking for non-Zapier users). */
+/** Try to resolve Zapier SDK from various locations. */
+async function tryResolveZapierSdk(): Promise<{ createZapierSdk: () => any } | null> {
+  const { createRequire } = await import("node:module");
+  const { existsSync } = await import("node:fs");
+  const { homedir } = await import("node:os");
+
+  // Locations to check for Zapier SDK
+  const searchPaths = [
+    // 1. Local node_modules (if running from source)
+    process.cwd(),
+    // 2. claude_home (known location)
+    `${homedir()}/Desktop/claude_home`,
+    // 3. Global mise/node modules
+    `${homedir()}/.local/share/mise/installs/node`,
+  ];
+
+  for (const basePath of searchPaths) {
+    try {
+      // Check if path exists before requiring
+      const sdkPath = `${basePath}/node_modules/@zapier/zapier-sdk`;
+      const loginPath = `${basePath}/node_modules/@zapier/zapier-sdk-cli-login`;
+
+      if (existsSync(sdkPath) && existsSync(loginPath)) {
+        // Create a require function rooted at this path
+        const localRequire = createRequire(`${basePath}/package.json`);
+
+        // Pre-load cli-login so SDK can find credentials
+        localRequire("@zapier/zapier-sdk-cli-login");
+        const { createZapierSdk } = localRequire("@zapier/zapier-sdk");
+
+        console.error(`[auth] Found Zapier SDK at ${basePath}`);
+        return { createZapierSdk };
+      }
+    } catch {
+      // This path didn't work, try next
+    }
+  }
+
+  // Try direct import as last resort (works if bundled with deps)
+  try {
+    await import("@zapier/zapier-sdk-cli-login");
+    const { createZapierSdk } = await import("@zapier/zapier-sdk");
+    console.error("[auth] Found Zapier SDK via direct import");
+    return { createZapierSdk };
+  } catch {
+    return null;
+  }
+}
+
+/** Create Zapier SDK client (dynamically resolves SDK from system). */
 async function createZapierClient(account?: string): Promise<FetchClient> {
-  const { createZapierSdk } = await import("@zapier/zapier-sdk");
-  const zapier = createZapierSdk();
+  const sdk = await tryResolveZapierSdk();
+  if (!sdk) {
+    fail(
+      "Zapier SDK not found. Install it globally or use another auth method:\n" +
+      "  1. npm install -g @zapier/zapier-sdk @zapier/zapier-sdk-cli-login\n" +
+      "  2. Or set GOOGLE_SERVICE_ACCOUNT_KEY or use gcloud ADC"
+    );
+  }
+
+  const zapier = sdk.createZapierSdk();
   const connection = await resolveConnectionId(account ?? "default");
 
   return {
