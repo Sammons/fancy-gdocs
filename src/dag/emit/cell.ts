@@ -29,7 +29,11 @@ export function emitCell(cell: CellNode, ctx: EmitContext, _cellIndex: number): 
     for (const run of child.runs) {
       if (!run) continue;
       const text = run.text;
-      ctx.pushDeferred(
+      // Cell content insertText goes to structure batch (not deferred) because
+      // it must execute in document order to avoid index shifts affecting later cells.
+      // The table emitter walks cells in forward order, so each cell's text is
+      // inserted before subsequent cells are processed.
+      ctx.pushRequest(
         { insertText: { text, location: { index: idx } } },
         ["insertText.location.index"],
       );

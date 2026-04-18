@@ -23,20 +23,29 @@ export function emitTable(node: TableNode, ctx: EmitContext): void {
     ["insertTable.location.index"],
   );
 
-  // Walk cells in reverse; pin cursor at cell-start for each.
-  for (let r = R - 1; r >= 0; r--) {
-    for (let c = C - 1; c >= 0; c--) {
-      const cellIdx = tableStart + 4 + r * (2 * C + 1) + c * 2;
+  // Walk cells in FORWARD order because cell content now goes to structure batch.
+  // Track cumulative text offset as each cell's insertText shifts subsequent indices.
+  let textOffset = 0;
+  for (let r = 0; r < R; r++) {
+    for (let c = 0; c < C; c++) {
+      // Base cell index from table structure, plus accumulated text from prior cells
+      const baseCellIdx = tableStart + 4 + r * (2 * C + 1) + c * 2;
+      const cellIdx = baseCellIdx + textOffset;
       const cell = node.rows[r][c];
-      ctx.cursor.withFixedIndex(cellIdx, () => emitCell(cell, ctx, cellIdx));
+      const charsWritten = ctx.cursor.withFixedIndex(cellIdx, () => emitCell(cell, ctx, cellIdx));
+      textOffset += charsWritten;
     }
   }
 
-  const tableLen = 3 + R * (2 * C + 1);
-  ctx.cursor.advance(tableLen);
+  // Table structural length plus all inserted cell text
+  const tableStructureLen = 3 + R * (2 * C + 1);
+  const tableTotalLen = tableStructureLen + textOffset;
+  ctx.cursor.advance(tableTotalLen);
 
   // Table modification requests use tableStart + 1 because tableStartLocation
   // must point at the TABLE structural element, not the insertion index.
+  // Note: deferred requests will be rebased, so we use the base tableStart + 1,
+  // not accounting for textOffset here. The rebase pass handles index adjustment.
   const tableStartLoc = tableStart + 1;
 
   // mergeTableCells — must be deferred (table must exist first)
