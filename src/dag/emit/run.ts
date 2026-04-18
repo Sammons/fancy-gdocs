@@ -55,7 +55,7 @@ function getAnchorName(link: Run["link"]): string {
   throw new Error(`getAnchorName: unexpected link format: ${JSON.stringify(link)}`);
 }
 
-export function buildTextStyle(run: Run, skipAnchorLink = false): TextStyleBuild | null {
+export function buildTextStyle(run: Run, skipAnchorLink = false): TextStyleBuild {
   const style: Record<string, unknown> = {};
   const fields: string[] = [];
   if (run.bold !== undefined) { style.bold = run.bold; fields.push("bold"); }
@@ -88,7 +88,8 @@ export function buildTextStyle(run: Run, skipAnchorLink = false): TextStyleBuild
   }
   if (run.superscript) { style.baselineOffset = "SUPERSCRIPT"; fields.push("baselineOffset"); }
   else if (run.subscript) { style.baselineOffset = "SUBSCRIPT"; fields.push("baselineOffset"); }
-  if (fields.length === 0) return null;
+  // Always return a result (even if empty) so theme application can fill in defaults.
+  // Empty style/fields will be populated by applyTheme with font, size, color.
   return { style, fields };
 }
 
@@ -124,19 +125,18 @@ export function emitRuns(runs: Run[], startIndex: number, ctx: EmitContext): num
       // IMPORTANT: Use pushDeferred so updateTextStyle runs AFTER updateParagraphStyle.
       // When namedStyleType is applied via updateParagraphStyle, it resets text formatting.
       // By deferring updateTextStyle, inline styles (color, bold, etc.) are applied last.
+      // Always emit updateTextStyle so theme application can fill in font/color/size defaults.
       const ts = buildTextStyle(run, hasAnchorLink);
-      if (ts) {
-        ctx.pushDeferred(
-          {
-            updateTextStyle: {
-              range: { startIndex: runStart, endIndex: runEnd },
-              textStyle: ts.style,
-              fields: ts.fields.join(","),
-            },
+      ctx.pushDeferred(
+        {
+          updateTextStyle: {
+            range: { startIndex: runStart, endIndex: runEnd },
+            textStyle: ts.style,
+            fields: ts.fields.join(","),
           },
-          ["updateTextStyle.range.startIndex", "updateTextStyle.range.endIndex"],
-        );
-      }
+        },
+        ["updateTextStyle.range.startIndex", "updateTextStyle.range.endIndex"],
+      );
     }
 
     // Register footnote if present (deferred - createFootnote happens later)

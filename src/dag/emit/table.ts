@@ -18,6 +18,20 @@ export function emitTable(node: TableNode, ctx: EmitContext): void {
   const C = R === 0 ? 0 : node.rows[0].length;
   const tableStart = ctx.cursor.getIndex();
 
+  // Build set of cells covered by merges (excluding anchor cells)
+  const coveredCells = new Set<string>();
+  if (node.merges) {
+    for (const m of node.merges) {
+      for (let dr = 0; dr < m.rowSpan; dr++) {
+        for (let dc = 0; dc < m.colSpan; dc++) {
+          // Skip the anchor cell (top-left of merge region)
+          if (dr === 0 && dc === 0) continue;
+          coveredCells.add(`${m.row + dr},${m.col + dc}`);
+        }
+      }
+    }
+  }
+
   ctx.pushRequest(
     { insertTable: { rows: R, columns: C, location: { index: tableStart } } },
     ["insertTable.location.index"],
@@ -32,7 +46,10 @@ export function emitTable(node: TableNode, ctx: EmitContext): void {
       const baseCellIdx = tableStart + 4 + r * (2 * C + 1) + c * 2;
       const cellIdx = baseCellIdx + textOffset;
       const cell = node.rows[r][c];
-      const charsWritten = ctx.cursor.withFixedIndex(cellIdx, () => emitCell(cell, ctx, cellIdx));
+      // Skip content for cells that will be covered by a merge — they keep their
+      // implicit empty paragraph, avoiding fluff newlines after merge concatenation
+      if (coveredCells.has(`${r},${c}`)) continue;
+      const charsWritten = ctx.cursor.withFixedIndex(cellIdx, () => emitCell(cell, ctx, cellIdx, r));
       textOffset += charsWritten;
     }
   }
@@ -108,6 +125,31 @@ export function emitTable(node: TableNode, ctx: EmitContext): void {
     for (let c = 0; c < C; c++) {
       pushCellStyle(ctx, node.rows[r][c], tableStartLoc, r, c);
     }
+  }
+
+  // Theme-based header row styling (first row gets headerBackground from theme)
+  const tableTheme = ctx.theme?.table;
+  if (tableTheme?.headerBackground && R > 0 && C > 0) {
+    ctx.pushDeferred(
+      {
+        updateTableCellStyle: {
+          tableRange: {
+            tableCellLocation: {
+              tableStartLocation: { index: tableStartLoc },
+              rowIndex: 0,
+              columnIndex: 0,
+            },
+            rowSpan: 1,
+            columnSpan: C,
+          },
+          tableCellStyle: {
+            backgroundColor: { color: { rgbColor: hexToRgb(tableTheme.headerBackground) } },
+          },
+          fields: "backgroundColor",
+        },
+      },
+      ["updateTableCellStyle.tableRange.tableCellLocation.tableStartLocation.index"],
+    );
   }
 
   // noBorder: apply zeroed borders to all cells via a full-table range — must be deferred

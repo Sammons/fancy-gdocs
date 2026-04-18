@@ -1,0 +1,64 @@
+{
+  "name": "analytical-depth",
+  "description": "Intellectual gravitas with monospace-influenced headings - for technical books and serious analysis",
+  "theme": {
+    "fontFamily": "Nunito Sans",
+    "fontSize": 11,
+    "textColor": "#374151",
+    "linkColor": "#10B981",
+    "TITLE": {
+      "fontFamily": "Space Grotesk",
+      "fontSize": 28,
+      "color": "#1E3A5F",
+      "bold": true
+    },
+    "SUBTITLE": {
+      "fontFamily": "Space Grotesk",
+      "fontSize": 13,
+      "color": "#10B981",
+      "bold": false
+    },
+    "HEADING_1": {
+      "fontFamily": "Space Grotesk",
+      "fontSize": 20,
+      "color": "#1E3A5F",
+      "bold": true
+    },
+    "HEADING_2": {
+      "fontFamily": "Space Grotesk",
+      "fontSize": 15,
+      "color": "#2D5A87",
+      "bold": true
+    },
+    "HEADING_3": {
+      "fontFamily": "Space Grotesk",
+      "fontSize": 12,
+      "color": "#2D5A87",
+      "bold": true
+    },
+    "NORMAL_TEXT": {
+      "fontFamily": "Nunito Sans",
+      "fontSize": 11,
+      "color": "#374151"
+    },
+    "table": {
+      "headerBackground": "#1E3A5F",
+      "headerColor": "#FFFFFF",
+      "headerBold": true,
+      "cellPadding": 8,
+      "borderColor": "#CBD5E0",
+      "borderWidth": 1
+    }
+  },
+  "documentStyle": {
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "tableHeaderStyle": {
+    "fill": "#1E3A5F",
+    "textColor": "#FFFFFF",
+    "bold": true
+  }
+}

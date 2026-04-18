@@ -7,7 +7,10 @@ export interface NamedStyleOverride {
   color?: string;
   bold?: boolean;
   italic?: boolean;
-  // spacing is handled at paragraph level, not text style
+  // Paragraph-level spacing (applied via updateParagraphStyle)
+  spaceAbove?: number;   // space before paragraph in pt
+  spaceBelow?: number;   // space after paragraph in pt
+  lineSpacing?: number;  // line spacing multiplier (1.0 = single, 1.5 = 1.5x, etc.)
 }
 
 export interface TableTheme {

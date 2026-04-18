@@ -17,7 +17,8 @@ export interface CompileResult {
 
 export function compileDoc(spec: DocSpec, theme?: ThemeSpec): CompileResult {
   // Cursor starts at 0 (segment-relative). Rebase adds origin (1 for body, 0 for headers).
-  const ctx = new EmitContext(new IndexCursor(0), new SegmentScope(), new DocumentRegistry());
+  // Pass theme to EmitContext so emitters can apply theme-specific styling (e.g., table headers).
+  const ctx = new EmitContext(new IndexCursor(0), new SegmentScope(), new DocumentRegistry(), theme);
   walk(spec, ctx);
   const ir = ctx.buildIR();
   const themedIr = theme ? applyTheme(ir, theme) : ir;
