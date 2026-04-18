@@ -112,7 +112,7 @@ async function handleCreate(args: string[]): Promise<void> {
 
   if (dryRun) {
     // Use DAG compile for dry-run to output the IR structure
-    const { ir, registry } = compileDoc(spec);
+    const { ir, registry } = compileDoc(spec, spec.theme);
     const output = {
       title: spec.title,
       account: spec.account ?? "work",

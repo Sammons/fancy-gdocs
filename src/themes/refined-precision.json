@@ -1,0 +1,64 @@
+{
+  "name": "refined-precision",
+  "description": "Elevated architectural aesthetic - premium consulting positioning without ostentation",
+  "theme": {
+    "fontFamily": "Inter",
+    "fontSize": 11,
+    "textColor": "#52525B",
+    "linkColor": "#A855F7",
+    "TITLE": {
+      "fontFamily": "DM Sans",
+      "fontSize": 30,
+      "color": "#18181B",
+      "bold": true
+    },
+    "SUBTITLE": {
+      "fontFamily": "DM Sans",
+      "fontSize": 12,
+      "color": "#A855F7",
+      "bold": false
+    },
+    "HEADING_1": {
+      "fontFamily": "DM Sans",
+      "fontSize": 18,
+      "color": "#18181B",
+      "bold": true
+    },
+    "HEADING_2": {
+      "fontFamily": "DM Sans",
+      "fontSize": 14,
+      "color": "#3F3F46",
+      "bold": true
+    },
+    "HEADING_3": {
+      "fontFamily": "DM Sans",
+      "fontSize": 12,
+      "color": "#3F3F46",
+      "bold": true
+    },
+    "NORMAL_TEXT": {
+      "fontFamily": "Inter",
+      "fontSize": 11,
+      "color": "#52525B"
+    },
+    "table": {
+      "headerBackground": "#27272A",
+      "headerColor": "#FFFFFF",
+      "headerBold": true,
+      "cellPadding": 8,
+      "borderColor": "#D4D4D8",
+      "borderWidth": 1
+    }
+  },
+  "documentStyle": {
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "tableHeaderStyle": {
+    "fill": "#27272A",
+    "textColor": "#FFFFFF",
+    "bold": true
+  }
+}

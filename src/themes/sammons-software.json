@@ -1,40 +1,96 @@
 {
   "name": "sammons-software",
-  "description": "Sammons Software LLC professional branding - clean, modern, technical",
+  "description": "Sammons Software LLC professional branding - clean, modern, technical with visual polish",
   "theme": {
     "fontFamily": "Lato",
     "fontSize": 11,
     "textColor": "#2D3748",
-    "linkColor": "#4299E1",
-    "TITLE": { "fontFamily": "Montserrat", "fontSize": 28, "color": "#2D3748", "bold": true },
-    "SUBTITLE": { "fontFamily": "Montserrat", "fontSize": 14, "color": "#4A5568", "italic": true },
-    "HEADING_1": { "fontFamily": "Montserrat", "fontSize": 20, "color": "#2D3748", "bold": true },
-    "HEADING_2": { "fontFamily": "Montserrat", "fontSize": 16, "color": "#2D3748", "bold": true },
-    "HEADING_3": { "fontFamily": "Montserrat", "fontSize": 13, "color": "#4A5568", "bold": true },
-    "NORMAL_TEXT": { "fontFamily": "Lato", "fontSize": 11, "color": "#2D3748" },
+    "linkColor": "#3182CE",
+    "backgroundColor": "#FAFBFC",
+    "TITLE": {
+      "fontFamily": "Montserrat",
+      "fontSize": 32,
+      "color": "#1A365D",
+      "bold": true,
+      "spaceBelow": 6
+    },
+    "SUBTITLE": {
+      "fontFamily": "Montserrat",
+      "fontSize": 14,
+      "color": "#4299E1",
+      "italic": true,
+      "spaceBelow": 24
+    },
+    "HEADING_1": {
+      "fontFamily": "Montserrat",
+      "fontSize": 22,
+      "color": "#1A365D",
+      "bold": true,
+      "spaceAbove": 18,
+      "spaceBelow": 8,
+      "borderBottom": { "color": "#4299E1", "width": 2 }
+    },
+    "HEADING_2": {
+      "fontFamily": "Montserrat",
+      "fontSize": 16,
+      "color": "#2D3748",
+      "bold": true,
+      "spaceAbove": 14,
+      "spaceBelow": 6
+    },
+    "HEADING_3": {
+      "fontFamily": "Montserrat",
+      "fontSize": 13,
+      "color": "#4A5568",
+      "bold": true,
+      "spaceAbove": 10,
+      "spaceBelow": 4
+    },
+    "NORMAL_TEXT": {
+      "fontFamily": "Lato",
+      "fontSize": 11,
+      "color": "#2D3748",
+      "lineSpacing": 1.15
+    },
     "table": {
-      "headerBackground": "#2D3748",
+      "headerBackground": "#1A365D",
       "headerColor": "#FFFFFF",
       "headerBold": true,
-      "cellPadding": 6,
-      "borderColor": "#E2E8F0",
+      "cellPadding": 8,
+      "borderColor": "#CBD5E0",
       "borderWidth": 1,
-      "alternateRowBackground": "#F7FAFC"
+      "alternateRowBackground": "#EDF2F7"
     }
   },
   "documentStyle": {
     "marginTop": 72,
     "marginBottom": 72,
     "marginLeft": 72,
-    "marginRight": 72
+    "marginRight": 72,
+    "pageBackgroundFill": "#FAFBFC"
   },
   "calloutPresets": {
-    "info": { "fill": "#EBF8FF", "borderColor": "#4299E1" },
-    "warning": { "fill": "#FFFAF0", "borderColor": "#ED8936" },
-    "tip": { "fill": "#F0FFF4", "borderColor": "#48BB78" }
+    "info": { "fill": "#EBF8FF", "borderColor": "#3182CE" },
+    "warning": { "fill": "#FFFAF0", "borderColor": "#DD6B20" },
+    "tip": { "fill": "#F0FFF4", "borderColor": "#38A169" },
+    "note": { "fill": "#FAF5FF", "borderColor": "#805AD5" }
+  },
+  "pullQuoteStyle": {
+    "borderLeft": { "color": "#4299E1", "width": 4 },
+    "paddingLeft": 16,
+    "fontStyle": "italic",
+    "color": "#4A5568"
+  },
+  "codeBlockStyle": {
+    "fontFamily": "Roboto Mono",
+    "fontSize": 10,
+    "backgroundColor": "#1A202C",
+    "textColor": "#E2E8F0",
+    "padding": 12,
+    "borderRadius": 4
   },
   "tableHeaderStyle": {
-    "fill": "#2D3748",
+    "fill": "#1A365D",
     "textColor": "#FFFFFF",
     "bold": true
   }

@@ -23,7 +23,7 @@ export interface ThemePreset {
   };
 }
 
-export const THEME_NAMES = ["corporate", "dark-mode", "academic", "sammons-software"] as const;
+export const THEME_NAMES = ["corporate", "dark-mode", "academic", "sammons-software", "technical-authority", "refined-precision", "analytical-depth"] as const;
 export type ThemeName = (typeof THEME_NAMES)[number];
 
 const themeCache = new Map<ThemeName, ThemePreset>();

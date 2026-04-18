@@ -1,0 +1,64 @@
+{
+  "name": "technical-authority",
+  "description": "Clean engineering-precision aesthetic signaling technical competence and systematic thinking",
+  "theme": {
+    "fontFamily": "Source Sans 3",
+    "fontSize": 11,
+    "textColor": "#475569",
+    "linkColor": "#0EA5E9",
+    "TITLE": {
+      "fontFamily": "IBM Plex Sans",
+      "fontSize": 28,
+      "color": "#0F172A",
+      "bold": true
+    },
+    "SUBTITLE": {
+      "fontFamily": "IBM Plex Sans",
+      "fontSize": 13,
+      "color": "#0EA5E9",
+      "bold": false
+    },
+    "HEADING_1": {
+      "fontFamily": "IBM Plex Sans",
+      "fontSize": 20,
+      "color": "#0F172A",
+      "bold": true
+    },
+    "HEADING_2": {
+      "fontFamily": "IBM Plex Sans",
+      "fontSize": 16,
+      "color": "#334155",
+      "bold": true
+    },
+    "HEADING_3": {
+      "fontFamily": "IBM Plex Sans",
+      "fontSize": 13,
+      "color": "#334155",
+      "bold": true
+    },
+    "NORMAL_TEXT": {
+      "fontFamily": "Source Sans 3",
+      "fontSize": 11,
+      "color": "#475569"
+    },
+    "table": {
+      "headerBackground": "#1E293B",
+      "headerColor": "#FFFFFF",
+      "headerBold": true,
+      "cellPadding": 8,
+      "borderColor": "#CBD5E1",
+      "borderWidth": 1
+    }
+  },
+  "documentStyle": {
+    "marginTop": 72,
+    "marginBottom": 72,
+    "marginLeft": 72,
+    "marginRight": 72
+  },
+  "tableHeaderStyle": {
+    "fill": "#1E293B",
+    "textColor": "#FFFFFF",
+    "bold": true
+  }
+}

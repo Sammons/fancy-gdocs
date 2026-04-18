@@ -18,9 +18,18 @@ function rewriteSegment(s: Segment, theme: ThemeSpec): Segment {
   return {
     segmentId: s.segmentId,
     tabId: s.tabId,
-    localRequests: s.localRequests.map((r) => rewrite(r, theme)),
-    deferredRequests: s.deferredRequests.map((r) => rewrite(r, theme)),
+    localRequests: s.localRequests.map((r) => rewrite(r, theme)).filter(isNonEmpty),
+    deferredRequests: s.deferredRequests.map((r) => rewrite(r, theme)).filter(isNonEmpty),
   };
+}
+
+/** Filter out updateTextStyle/updateParagraphStyle requests that ended up with empty fields. */
+function isNonEmpty(r: SegmentRelativeRequest): boolean {
+  const uts = (r.request as any).updateTextStyle;
+  if (uts && (!uts.fields || uts.fields === "")) return false;
+  const ups = (r.request as any).updateParagraphStyle;
+  if (ups && (!ups.fields || ups.fields === "")) return false;
+  return true;
 }
 
 function isHeadingStyle(style: NamedStyleType | undefined): boolean {
@@ -47,6 +56,8 @@ function getStyleOverride(theme: ThemeSpec, namedStyleType: NamedStyleType | und
 
 function rewrite(r: SegmentRelativeRequest, theme: ThemeSpec): SegmentRelativeRequest {
   const req = JSON.parse(JSON.stringify(r.request)) as Record<string, unknown>;
+
+  // Handle updateTextStyle — apply text styling from theme
   const uts = req.updateTextStyle as { textStyle?: Record<string, unknown>; fields?: string } | undefined;
   if (uts) {
     const ts = uts.textStyle ?? (uts.textStyle = {});
@@ -104,6 +115,38 @@ function rewrite(r: SegmentRelativeRequest, theme: ThemeSpec): SegmentRelativeRe
 
     uts.fields = Array.from(existingFields).join(",");
   }
+
+  // Handle updateParagraphStyle — apply spacing from theme based on namedStyleType
+  const ups = req.updateParagraphStyle as { paragraphStyle?: Record<string, unknown>; fields?: string } | undefined;
+  if (ups && r.namedStyleType) {
+    const ps = ups.paragraphStyle ?? (ups.paragraphStyle = {});
+    const existingFields = new Set((ups.fields ?? "").split(",").filter(Boolean));
+    const addField = (name: string) => existingFields.add(name);
+
+    const styleOverride = getStyleOverride(theme, r.namedStyleType);
+    if (styleOverride) {
+      // Apply spaceAbove
+      if (styleOverride.spaceAbove !== undefined && !ps.spaceAbove) {
+        ps.spaceAbove = { magnitude: styleOverride.spaceAbove, unit: "PT" };
+        addField("spaceAbove");
+      }
+
+      // Apply spaceBelow
+      if (styleOverride.spaceBelow !== undefined && !ps.spaceBelow) {
+        ps.spaceBelow = { magnitude: styleOverride.spaceBelow, unit: "PT" };
+        addField("spaceBelow");
+      }
+
+      // Apply lineSpacing (convert multiplier to percentage: 1.15 → 115)
+      if (styleOverride.lineSpacing !== undefined && !ps.lineSpacing) {
+        ps.lineSpacing = styleOverride.lineSpacing <= 10 ? styleOverride.lineSpacing * 100 : styleOverride.lineSpacing;
+        addField("lineSpacing");
+      }
+    }
+
+    ups.fields = Array.from(existingFields).join(",");
+  }
+
   return { request: req, indexFields: r.indexFields.slice(), namedStyleType: r.namedStyleType };
 }
 

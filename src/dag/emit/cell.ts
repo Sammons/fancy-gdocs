@@ -13,13 +13,19 @@ import type { CellNode } from "../types/block.ts";
 import type { EmitContext } from "../ir/emit-context.ts";
 import { buildTextStyle } from "./run.ts";
 
-export function emitCell(cell: CellNode, ctx: EmitContext, _cellIndex: number): number {
+export function emitCell(cell: CellNode, ctx: EmitContext, _cellIndex: number, rowIndex = 0): number {
   let idx = ctx.cursor.getIndex();
   const start = idx;
 
   // Table cells use NORMAL_TEXT style for theme application
   const prevNamedStyle = ctx.getNamedStyle();
   ctx.setNamedStyle("NORMAL_TEXT");
+
+  // Check if this is a header row (row 0) and theme has header styling
+  const isHeaderRow = rowIndex === 0;
+  const tableTheme = ctx.theme?.table;
+  const headerColor = isHeaderRow ? tableTheme?.headerColor : undefined;
+  const headerBold = isHeaderRow ? tableTheme?.headerBold : undefined;
 
   for (const child of cell.children) {
     if (child.kind !== "paragraph") {
@@ -40,13 +46,26 @@ export function emitCell(cell: CellNode, ctx: EmitContext, _cellIndex: number): 
       const runStart = idx;
       idx += text.length;
       const ts = buildTextStyle(run);
-      if (ts) {
+
+      // Merge header styling from theme (if applicable)
+      const style = ts.style;
+      const fields = ts.fields.slice();
+      if (headerColor && !style.foregroundColor) {
+        style.foregroundColor = { color: { rgbColor: hexToRgb(headerColor) } };
+        fields.push("foregroundColor");
+      }
+      if (headerBold !== undefined && style.bold === undefined) {
+        style.bold = headerBold;
+        fields.push("bold");
+      }
+
+      if (fields.length > 0) {
         ctx.pushDeferred(
           {
             updateTextStyle: {
               range: { startIndex: runStart, endIndex: idx },
-              textStyle: ts.style,
-              fields: ts.fields.join(","),
+              textStyle: style,
+              fields: fields.join(","),
             },
           },
           ["updateTextStyle.range.startIndex", "updateTextStyle.range.endIndex"],
@@ -59,4 +78,10 @@ export function emitCell(cell: CellNode, ctx: EmitContext, _cellIndex: number): 
   ctx.setNamedStyle(prevNamedStyle);
 
   return idx - start;
+}
+
+function hexToRgb(hex: string): { red: number; green: number; blue: number } {
+  const m = hex.replace("#", "");
+  const n = parseInt(m.length === 3 ? m.split("").map((x) => x + x).join("") : m, 16);
+  return { red: ((n >> 16) & 0xff) / 255, green: ((n >> 8) & 0xff) / 255, blue: (n & 0xff) / 255 };
 }

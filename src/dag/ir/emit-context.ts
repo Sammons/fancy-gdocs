@@ -2,22 +2,24 @@ import { IndexCursor } from "./index-cursor.ts";
 import { SegmentScope } from "./segment-scope.ts";
 import { DocumentRegistry } from "./document-registry.ts";
 import { makeRequest, type DocIR, type Segment, type SegmentRelativeRequest } from "./doc-ir.ts";
-import type { NamedStyleType } from "../theme/theme-spec.ts";
+import type { NamedStyleType, ThemeSpec } from "../theme/theme-spec.ts";
 
 export class EmitContext {
   readonly cursor: IndexCursor;
   readonly scope: SegmentScope;
   readonly registry: DocumentRegistry;
+  readonly theme: ThemeSpec | undefined;
   #segments: Segment[] = [];
   #current: Segment | undefined;
   #lastTabId: string | undefined = undefined;
   /** Current paragraph's named style type — set by paragraph emitter for theme application */
   #currentNamedStyle: NamedStyleType | undefined = undefined;
 
-  constructor(cursor: IndexCursor, scope: SegmentScope, registry: DocumentRegistry) {
+  constructor(cursor: IndexCursor, scope: SegmentScope, registry: DocumentRegistry, theme?: ThemeSpec) {
     this.cursor = cursor;
     this.scope = scope;
     this.registry = registry;
+    this.theme = theme;
   }
 
   openSegment(): void {
