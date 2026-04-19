@@ -1,6 +1,6 @@
 {
   "name": "fancy-gdocs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Google Docs DSL compiler — write docs in JSON, get formatted documents",
   "author": {
     "name": "Ben Sammons",
