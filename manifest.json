@@ -1,0 +1,45 @@
+{
+  "manifest_version": "0.3",
+  "name": "fancy-gdocs",
+  "version": "0.2.0",
+  "description": "Google Docs DSL compiler — write docs in JSON, get formatted documents",
+  "author": {
+    "name": "Ben Sammons",
+    "email": "ben@sammons.io"
+  },
+  "repository": "https://github.com/Sammons/fancy-gdocs",
+  "license": "MIT",
+  "server": {
+    "type": "node",
+    "mcp_config": {
+      "command": "node",
+      "args": ["${__dirname}/dist/mcp-server.js"]
+    }
+  },
+  "tools": [
+    {
+      "name": "create_doc",
+      "description": "Create a Google Doc from a DSL specification"
+    },
+    {
+      "name": "read_doc",
+      "description": "Read a Google Doc and return its content as DSL blocks"
+    },
+    {
+      "name": "list_themes",
+      "description": "List available document themes"
+    },
+    {
+      "name": "validate_spec",
+      "description": "Validate a document spec without creating it"
+    }
+  ],
+  "credentials": [
+    {
+      "id": "zapier_google_docs",
+      "name": "Google Docs (via Zapier)",
+      "description": "Zapier SDK connection for Google Docs API access",
+      "sensitive": true
+    }
+  ]
+}

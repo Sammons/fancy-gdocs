@@ -1,6 +1,6 @@
 {
   "name": "@sammons/fancy-gdocs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Google Docs DSL compiler and runtime for programmatic document generation",
   "type": "module",
   "main": "dist/gdocs.js",
@@ -9,12 +9,15 @@
   },
   "scripts": {
     "build": "esbuild src/entrypoint.ts --bundle --platform=node --format=esm --outfile=dist/gdocs.js --external:typescript --external:@zapier/zapier-sdk --external:@zapier/zapier-sdk-cli-login && cp src/themes/*.json dist/",
+    "build:mcp": "esbuild src/mcp-server.ts --bundle --platform=node --format=esm --outfile=dist/mcp-server.js --external:typescript --external:@zapier/zapier-sdk --external:@zapier/zapier-sdk-cli-login",
+    "build:all": "pnpm build && pnpm build:mcp",
     "test": "node --test src/**/*.test.ts",
     "e2e": "node src/e2e/round-trip.e2e.ts",
     "typecheck": "tsc --noEmit",
     "audit": "npm audit --audit-level=moderate"
   },
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
     "@resvg/resvg-js": "^2.6.2",
     "zod": "^3.23.0"
   },
